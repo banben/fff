@@ -51,7 +51,7 @@ var __shoucang_readability__ = {
         skipFootnoteLink: /^\s*(\[?[a-z0-9]{1,2}\]?|^|edit|citation needed)\s*$/i,
         nextLink: /(next|weiter|continue|>([^\|]|$)|Â»([^\|]|$))/i, // Match: next, continue, >, >>, Â» but not >|, Â»| as those usually mean last.
         prevLink: /(prev|earl|old|new|<|Â«)/i,
-        endPunt: /[\.\,\?\!\'\"\:\;\-\—\。\？\！\，\、\；\：\“\”\﹃\﹄\﹁\﹂\（\）\［\］\〔\〕\【\】\—\…\《\》\〈\〉\﹏\＿]$/
+        endPunt: /[\.\,\?\(\)\!\'\"\:\;\-\—\。\？\！\，\、\；\：\“\”\﹃\﹄\﹁\﹂\（\）\［\］\〔\〕\【\】\—\…\《\》\〈\〉\﹏\＿]$/
     },
 
     /**
@@ -73,15 +73,10 @@ var __shoucang_readability__ = {
         var articleURL = __shoucang_readability__.getArticleURL();
         var articleDesc = __shoucang_readability__.getArticleDesc();
         var articleSiteName = __shoucang_readability__.siteName || '';
-        if (__shoucang_readability__.isCanvasSupported) {
-            articleTitle = __shoucang_readability__.clipText(articleTitle, '"Helvetica Neue",Helvetica,Arial,sans-serif', '19px', 340);
-            articleDesc = __shoucang_readability__.clipText(articleDesc, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px', 1000);
-            articleSiteName = __shoucang_readability__.clipText(articleSiteName, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px', 124);
-        } else {
-            articleTitle = __shoucang_readability__.clipText(articleTitle, '"Helvetica Neue",Helvetica,Arial,sans-serif', '19px', 57);
-            articleDesc = __shoucang_readability__.clipText(articleDesc, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px', 185);
-            articleSiteName = __shoucang_readability__.clipText(articleSiteName, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px', 20);
-        }
+
+        articleTitle = __shoucang_readability__.clipText(articleTitle, 100);
+        articleDesc = __shoucang_readability__.clipText(articleDesc, 1000);
+        articleSiteName = __shoucang_readability__.clipText(articleSiteName, 100);
 
         __shoucang_readability__.postForm(articleTitle, articleURL, articleDesc, articleSiteName);
     },    
@@ -240,6 +235,7 @@ var __shoucang_readability__ = {
       if (metadata.excerpt) {
           metadata.excerpt = metadata.excerpt.replace(__shoucang_readability__.regexps.trim, '');
           metadata.excerpt = metadata.excerpt.replace(__shoucang_readability__.regexps.trimMiddle, ' ');
+          metadata.excerpt = __shoucang_readability__.parseHtmlEntities(metadata.excerpt);
       }
 
       // get site name
@@ -1145,27 +1141,21 @@ var __shoucang_readability__ = {
         return __shoucang_readability__.getWidthOfText.ctx.measureText(txt).width;
     },
 
-    clipText: function(txt, fontname, fontsize, threshold) {
-        for (var i = 0, s = '', len = 0, c = '', l = 0, j = 0; i < txt.length && len < threshold; i++) {
-            c = txt[i];
-            if (c === ' ') {
-                j = i;
-            }
-            l = __shoucang_readability__.getWidthOfText(c, fontname, fontsize);
-            s += c;
-            len += l;
-        }
-        
-        if (__shoucang_readability__.getWidthOfText(txt, fontname, fontsize) > threshold) {
-            if (j < i && i - j < 10) {
-                s = s.slice(0, j);
-            }
-            if (!__shoucang_readability__.regexps.endPunt.test(s)) {
-                s = s + '...'
-            }  
-        }
-        
-        return s;
+    parseHtmlEntities: function(str) {
+        str = str
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/&#039;/g, "'");
+        return str.replace(/&#([0-9]{1,3});/gi, function(match, numStr) {
+            var num = parseInt(numStr, 10); // read num as normal number
+            return String.fromCharCode(num);
+        });
+    },
+
+    clipText: function(txt, threshold) {
+        return txt.length > threshold ? txt.substring(0, threshold) : txt;
     }
 
 };

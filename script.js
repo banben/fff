@@ -73,15 +73,17 @@ var __shoucang_readability__ = {
         var articleURL = __shoucang_readability__.getArticleURL();
         var articleDesc = __shoucang_readability__.getArticleDesc();
         var articleSiteName = __shoucang_readability__.siteName || '';
+        var articleCharset = __shoucang_readability__.getCharset();
 
         articleTitle = __shoucang_readability__.clipText(articleTitle, 100);
         articleDesc = __shoucang_readability__.clipText(articleDesc, 1000);
         articleSiteName = __shoucang_readability__.clipText(articleSiteName, 100);
+        articleCharset = __shoucang_readability__.clipText(articleCharset, 40);
 
-        __shoucang_readability__.postForm(articleTitle, articleURL, articleDesc, articleSiteName);
+        __shoucang_readability__.postForm(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);
     },    
 
-    postForm: function(title, url, desc, siteName) {
+    postForm: function(title, url, desc, siteName, charset) {
         var form = document.createElement("form");
         form.setAttribute('method', 'post');
         form.setAttribute('action', 'http://localhost:8000/new');
@@ -102,11 +104,20 @@ var __shoucang_readability__ = {
         siteNameField.setAttribute('name', 'siteName');
         siteNameField.setAttribute('value', siteName);
         form.appendChild(siteNameField);
+        var charsetField = document.createElement("input");
+        charsetField.setAttribute('name', 'charset');
+        charsetField.setAttribute('value', charset);
+        form.appendChild(charsetField);
         form.style.display = "none";
         document.body.appendChild(form);
         window.open('', 'TheWindow');
         form.submit();
     },
+
+    getCharset: function() {
+        return document.charset || document.characterSet || '';
+    },
+
 
     /**
      * Runs __shoucang_readability__.

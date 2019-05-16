@@ -75,8 +75,8 @@ var __shoucang_readability__ = {
         var articleSiteName = __shoucang_readability__.siteName || '';
 
         articleURL = __shoucang_readability__.clipText(articleURL, 1000);
-        articleTitle = __shoucang_readability__.clipText(articleTitle, 40);
-        articleDesc = __shoucang_readability__.clipText(articleDesc, 160);
+        articleTitle = __shoucang_readability__.clipText(articleTitle, 60);
+        articleDesc = __shoucang_readability__.clipText(articleDesc, 190);
         articleSiteName = __shoucang_readability__.clipText(articleSiteName, 25);
 
         __shoucang_readability__.getWindow(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);

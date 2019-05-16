@@ -75,49 +75,22 @@ var __shoucang_readability__ = {
         var articleSiteName = __shoucang_readability__.siteName || '';
         var articleCharset = __shoucang_readability__.getCharset();
 
-        articleTitle = __shoucang_readability__.clipText(articleTitle, 100);
-        articleDesc = __shoucang_readability__.clipText(articleDesc, 1000);
-        articleSiteName = __shoucang_readability__.clipText(articleSiteName, 100);
-        articleCharset = __shoucang_readability__.clipText(articleCharset, 40);
+        articleURL = __shoucang_readability__.clipText(articleURL, 1000);
+        articleTitle = __shoucang_readability__.clipText(articleTitle, 60);
+        articleDesc = __shoucang_readability__.clipText(articleDesc, 190);
+        articleSiteName = __shoucang_readability__.clipText(articleSiteName, 25);
+        articleCharset = __shoucang_readability__.clipText(articleCharset, 10);
 
-        __shoucang_readability__.postForm(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);
+        __shoucang_readability__.getWindow(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);
     },    
 
-    postForm: function(title, url, desc, siteName, charset) {
-        var form = document.createElement("form");
-        form.setAttribute('method', 'post');
-        form.setAttribute('action', 'http://localhost:8000/new');
-        form.setAttribute('target', 'TheWindow');
-        var titleField = document.createElement("input");
-        titleField.setAttribute('name', 'title');
-        titleField.setAttribute('value', title);
-        form.appendChild(titleField);
-        var urlField = document.createElement("input");
-        urlField.setAttribute('name', 'url');
-        urlField.setAttribute('value', url);
-        form.appendChild(urlField);
-        var descField = document.createElement("input");
-        descField.setAttribute('name', 'desc');
-        descField.setAttribute('value', desc);
-        form.appendChild(descField);
-        var siteNameField = document.createElement("input");
-        siteNameField.setAttribute('name', 'siteName');
-        siteNameField.setAttribute('value', siteName);
-        form.appendChild(siteNameField);
-        var charsetField = document.createElement("input");
-        charsetField.setAttribute('name', 'charset');
-        charsetField.setAttribute('value', charset);
-        form.appendChild(charsetField);
-        form.style.display = "none";
-        document.body.appendChild(form);
-        window.open('', 'TheWindow');
-        form.submit();
+    getWindow: function(title, url, desc, siteName, charset) {
+        window.open('http://localhost:8000/new?c=' + encodeURIComponent(charset) + '&t=' + encodeURIComponent(title) + '&d=' + encodeURIComponent(desc) + '&s=' + encodeURIComponent(siteName));
     },
 
     getCharset: function() {
         return document.charset || document.characterSet || '';
     },
-
 
     /**
      * Runs __shoucang_readability__.
@@ -301,7 +274,7 @@ var __shoucang_readability__ = {
             return el.trim().length > 0;
         });
         var articleSlotCleaned = articleSlotFiltered.map(function(el) {
-            return el.replace(__shoucang_readability__.regexps.trim, "").replace(__shoucang_readability__.regexps.trimMiddle, " ");
+            return el.replace(__shoucang_readability__.regexps.trim, "").replace(__shougetWidthOfTextcang_readability__.regexps.trimMiddle, " ");
         });
         var articleSlotLens = articleSlotCleaned.map(function(el) {
             return __shoucang_readability__.getWidthOfText(el, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px');

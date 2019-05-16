@@ -274,7 +274,7 @@ var __shoucang_readability__ = {
             return el.trim().length > 0;
         });
         var articleSlotCleaned = articleSlotFiltered.map(function(el) {
-            return el.replace(__shoucang_readability__.regexps.trim, "").replace(__shougetWidthOfTextcang_readability__.regexps.trimMiddle, " ");
+            return el.replace(__shoucang_readability__.regexps.trim, "").replace(__shoucang_readability__.regexps.trimMiddle, " ");
         });
         var articleSlotLens = articleSlotCleaned.map(function(el) {
             return __shoucang_readability__.getWidthOfText(el, '"Helvetica Neue",Helvetica,Arial,sans-serif', '13px');

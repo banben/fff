@@ -79,7 +79,7 @@ var __shoucang_readability__ = {
         articleDesc = __shoucang_readability__.clipText(articleDesc, 190);
         articleSiteName = __shoucang_readability__.clipText(articleSiteName, 25);
 
-        __shoucang_readability__.getWindow(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);
+        __shoucang_readability__.getWindow(articleTitle, articleURL, articleDesc, articleSiteName);
     },    
 
     getWindow: function(title, url, desc, siteName, charset) {

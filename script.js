@@ -73,23 +73,17 @@ var __shoucang_readability__ = {
         var articleURL = __shoucang_readability__.getArticleURL();
         var articleDesc = __shoucang_readability__.getArticleDesc();
         var articleSiteName = __shoucang_readability__.siteName || '';
-        var articleCharset = __shoucang_readability__.getCharset();
 
         articleURL = __shoucang_readability__.clipText(articleURL, 1000);
-        articleTitle = __shoucang_readability__.clipText(articleTitle, 60);
-        articleDesc = __shoucang_readability__.clipText(articleDesc, 190);
+        articleTitle = __shoucang_readability__.clipText(articleTitle, 40);
+        articleDesc = __shoucang_readability__.clipText(articleDesc, 160);
         articleSiteName = __shoucang_readability__.clipText(articleSiteName, 25);
-        articleCharset = __shoucang_readability__.clipText(articleCharset, 10);
 
         __shoucang_readability__.getWindow(articleTitle, articleURL, articleDesc, articleSiteName, articleCharset);
     },    
 
     getWindow: function(title, url, desc, siteName, charset) {
-        window.open('http://localhost:8000/new?c=' + encodeURIComponent(charset) + '&t=' + encodeURIComponent(title) + '&d=' + encodeURIComponent(desc) + '&s=' + encodeURIComponent(siteName) + '&u=' + encodeURIComponent(url));
-    },
-
-    getCharset: function() {
-        return document.charset || document.characterSet || '';
+        window.open('http://localhost:8000/new?t=' + encodeURIComponent(title) + '&d=' + encodeURIComponent(desc) + '&s=' + encodeURIComponent(siteName) + '&u=' + encodeURIComponent(url));
     },
 
     /**

@@ -85,7 +85,7 @@ var __shoucang_readability__ = {
     },    
 
     getWindow: function(title, url, desc, siteName, charset) {
-        window.open('http://localhost:8000/new?c=' + encodeURIComponent(charset) + '&t=' + encodeURIComponent(title) + '&d=' + encodeURIComponent(desc) + '&s=' + encodeURIComponent(siteName));
+        window.open('http://localhost:8000/new?c=' + encodeURIComponent(charset) + '&t=' + encodeURIComponent(title) + '&d=' + encodeURIComponent(desc) + '&s=' + encodeURIComponent(siteName) + '&u=' + encodeURIComponent(url));
     },
 
     getCharset: function() {
